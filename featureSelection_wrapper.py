@@ -30,7 +30,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.feature_selection import RFECV
 from sklearn import preprocessing
-
+from pathlib import Path
 
 
 def performanceEvaluation(model, X, y, cv_, n):
@@ -68,6 +68,8 @@ def performanceEvaluation(model, X, y, cv_, n):
 
 path = r'''R:\temp\Disease Analysis\parkinson.csv'''
 dataset = pd.read_csv(path)
+r = Path("mydir/")
+absolute = r.absolute()
 
 print(dataset.describe())
 #print(dataset.hist())
@@ -117,5 +119,6 @@ rfecv.fit(X, y)
 X_new = rfecv.transform(X)
 df_rfe = df_rfe.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
 
+df_rfe.to_csv (r'R:\temp\Disease Analysis\wrapper.csv', index = None, header=True)
 
 

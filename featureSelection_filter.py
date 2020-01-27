@@ -35,17 +35,17 @@ from sklearn.feature_selection import mutual_info_classif
 from sklearn.preprocessing import MinMaxScaler
 
 
-def performanceEvaluation(model, X, y, cv):
-    df_temp=pd.DataFrame(columns=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1'])
+def performanceEvaluation(model, X, y, cv_, n):
+    df_temp=pd.DataFrame(columns=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1', 'nFeatures'])
     model_name = str(model)
     model_name = model_name.split('(')
     model_name = model_name[0]
     print("Model __: ", model_name)
-    accuracy = model_selection.cross_val_score(model, X, y, cv=10, scoring='accuracy')
-    auc = model_selection.cross_val_score(model, X, y, cv=10, scoring='roc_auc')
-    precision =  model_selection.cross_val_score(model, X, y, cv=10, scoring='precision_macro')
-    recall =  model_selection.cross_val_score(model, X, y, cv=10, scoring='recall_macro')
-    f1 =  model_selection.cross_val_score(model, X, y, cv=10, scoring='f1_macro')
+    accuracy = model_selection.cross_val_score(model, X, y, cv=cv_, scoring='accuracy')
+    auc = model_selection.cross_val_score(model, X, y, cv=cv_, scoring='roc_auc')
+    precision =  model_selection.cross_val_score(model, X, y, cv=cv_, scoring='precision_macro')
+    recall =  model_selection.cross_val_score(model, X, y, cv=cv_, scoring='recall_macro')
+    f1 =  model_selection.cross_val_score(model, X, y, cv=cv_, scoring='f1_macro')
     
 # =============================================================================
 #     acc = "{:.3f} ({:.3f})".format(accuracy.mean(), accuracy.std())
@@ -62,23 +62,23 @@ def performanceEvaluation(model, X, y, cv):
     f = f1.mean()
     
     
-    d =[ model_name, acc ,  a,  p, r,  f]
-    df_temp = df_temp.append(pd.Series(d,index=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1']),ignore_index=True)
+    d =[ model_name, acc ,  a,  p, r,  f, n]
+    df_temp = df_temp.append(pd.Series(d,index=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1', 'nFeatures']),ignore_index=True)
     return df_temp
 
 
-path = r'''T:\U of M\parkinson.csv'''
+path = r'''R:\temp\Disease Analysis\parkinson.csv'''
 dataset = pd.read_csv(path)
 
 print(dataset.describe())
 #print(dataset.hist())
-df=pd.DataFrame(columns=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1'])
+df=pd.DataFrame(columns=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1', 'nFeatures'])
 
-df_chi2=pd.DataFrame(columns=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1'])
+df_chi2=pd.DataFrame(columns=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1', 'nFeatures'])
 
-df_f=pd.DataFrame(columns=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1'])
+df_f=pd.DataFrame(columns=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1', 'nFeatures'])
 
-df_mi=pd.DataFrame(columns=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1'])
+df_mi=pd.DataFrame(columns=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1', 'nFeatures'])
 
 X = dataset[dataset.columns[:-1]].values
 y = dataset[dataset.columns[-1]].values
@@ -88,23 +88,23 @@ feature_n = 10
 ## Before feature selection
 #Logistic Regression
 model = LogisticRegression(random_state=0)
-df = df.append(performanceEvaluation(model, X, y, cv))
+df = df.append(performanceEvaluation(model, X, y, cv, len(X[0][:])))
 
 #Random Forest
 model = RandomForestClassifier(n_estimators = 100, random_state=0)
-df = df.append(performanceEvaluation(model, X, y, cv))
+df = df.append(performanceEvaluation(model, X, y, cv, len(X[0][:])))
 
 #SVM
 model = SVC(gamma='auto', random_state=0)
-df = df.append(performanceEvaluation(model, X, y, cv))
+df = df.append(performanceEvaluation(model, X, y, cv, len(X[0][:])))
 
 #Naive Bayes
 model = GaussianNB()
-df = df.append(performanceEvaluation(model, X, y, cv))
+df = df.append(performanceEvaluation(model, X, y, cv, len(X[0][:])))
 
 #KNN
 model = KNeighborsClassifier(n_neighbors=5)
-df = df.append(performanceEvaluation(model, X, y, cv))
+df = df.append(performanceEvaluation(model, X, y, cv, len(X[0][:])))
 
 
 
@@ -116,23 +116,23 @@ X_new = SelectKBest(chi2, k=feature_n).fit_transform(X_new,y)
 
 #Logistic Regression
 model = LogisticRegression(random_state=0)
-df_chi2 = df_chi2.append(performanceEvaluation(model, X_new, y, cv))
+df_chi2 = df_chi2.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
 
 #Random Forest
 model = RandomForestClassifier(n_estimators = 100, random_state=0)
-df_chi2 = df_chi2.append(performanceEvaluation(model, X_new, y, cv))
+df_chi2 = df_chi2.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
 
 #SVM
 model = SVC(gamma='auto', random_state=0)
-df_chi2 = df_chi2.append(performanceEvaluation(model, X_new, y, cv))
+df_chi2 = df_chi2.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
 
 #Naive Bayes
 model = GaussianNB()
-df_chi2 = df_chi2.append(performanceEvaluation(model, X_new, y, cv))
+df_chi2 = df_chi2.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
 
 #KNN
 model = KNeighborsClassifier(n_neighbors=5)
-df_chi2 = df_chi2.append(performanceEvaluation(model, X_new, y, cv))
+df_chi2 = df_chi2.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
 
 
 ## feature selection: Filter method-ANOVA ftest
@@ -142,23 +142,23 @@ X_new = SelectKBest(f_classif, k=feature_n).fit_transform(X,y)
 
 #Logistic Regression
 model = LogisticRegression(random_state=0)
-df_f = df_f.append(performanceEvaluation(model, X_new, y, cv))
+df_f = df_f.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
 
 #Random Forest
 model = RandomForestClassifier(n_estimators = 100, random_state=0)
-df_f = df_f.append(performanceEvaluation(model, X_new, y, cv))
+df_f = df_f.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
 
 #SVM
 model = SVC(gamma='auto', random_state=0)
-df_f = df_f.append(performanceEvaluation(model, X_new, y, cv))
+df_f = df_f.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
 
 #Naive Bayes
 model = GaussianNB()
-df_f = df_f.append(performanceEvaluation(model, X_new, y, cv))
+df_f = df_f.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
 
 #KNN
 model = KNeighborsClassifier(n_neighbors=5)
-df_f = df_f.append(performanceEvaluation(model, X_new, y, cv))
+df_f = df_f.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
 
 
 ## feature selection: Filter method-Mutual Information 
@@ -168,20 +168,26 @@ X_new = SelectKBest(mutual_info_classif, k=feature_n).fit_transform(X,y)
 
 #Logistic Regression
 model = LogisticRegression(random_state=0)
-df_mi = df_mi.append(performanceEvaluation(model, X_new, y, cv))
+df_mi = df_mi.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
 
 #Random Forest
 model = RandomForestClassifier(n_estimators = 100, random_state=0)
-df_mi = df_mi.append(performanceEvaluation(model, X_new, y, cv))
+df_mi = df_mi.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
 
 #SVM
 model = SVC(gamma='auto', random_state=0)
-df_mi = df_mi.append(performanceEvaluation(model, X_new, y, cv))
+df_mi = df_mi.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
 
 #Naive Bayes
 model = GaussianNB()
-df_mi = df_mi.append(performanceEvaluation(model, X_new, y, cv))
+df_mi = df_mi.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
 
 #KNN
 model = KNeighborsClassifier(n_neighbors=5)
-df_mi = df_mi.append(performanceEvaluation(model, X_new, y, cv))
+df_mi = df_mi.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
+
+
+df_mi.to_csv (r'R:\temp\Disease Analysis\filter_mi.csv', index = None, header=True)
+df_f.to_csv (r'R:\temp\Disease Analysis\filter_f.csv', index = None, header=True)
+df_chi2.to_csv (r'R:\temp\Disease Analysis\filter_chi2.csv', index = None, header=True)
+df.to_csv (r'R:\temp\Disease Analysis\wo_selection.csv', index = None, header=True)
