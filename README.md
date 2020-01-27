@@ -1,5 +1,5 @@
 # Disease-Analysis
-Analysis of detection of different diseases using differnt features selections techniques e.g., filter method, wrapper method and embedded method.
+Analysis of detection of different diseases using differnt features selections techniques e.g., filter method and wrapper method.
 
 ##Dataset:<br />
 Parkinson.csv <br />
