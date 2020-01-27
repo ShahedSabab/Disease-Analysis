@@ -29,7 +29,8 @@ from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.feature_selection import RFECV
-from mlxtend.feature_selection import SequentialFeatureSelector as SFS
+from sklearn import preprocessing
+
 
 
 def performanceEvaluation(model, X, y, cv_, n):
@@ -63,13 +64,6 @@ def performanceEvaluation(model, X, y, cv_, n):
     df_temp = df_temp.append(pd.Series(d,index=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1','nFeatures']),ignore_index=True)
     return df_temp
 
-
-def select_features(model, X, y):
-    feature_names = list(X.columns.values)
-    rfecv = RFECV(model, step=1, cv=10)
-    rfecv = rfecv.fit(X, y)
-    print("Features sorted by their rank:")
-    print(sorted(zip(map(lambda x: round(x, 4), rfecv.ranking_), feature_names)))
     
 
 path = r'''R:\temp\Disease Analysis\parkinson.csv'''
@@ -85,10 +79,10 @@ df_rfe=pd.DataFrame(columns=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 
 X = dataset[dataset.columns[:-1]].values
 y = dataset[dataset.columns[-1]].values
 cv = 10
+#X = preprocessing.scale(X)
 
 
-
-## Before feature selection
+# Before feature selection
 #Logistic Regression
 model = LogisticRegression(random_state=0)
 df = df.append(performanceEvaluation(model, X, y, cv, len(X[0][:])))
