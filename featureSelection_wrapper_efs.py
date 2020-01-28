@@ -20,6 +20,9 @@ from mlxtend.feature_selection import ExhaustiveFeatureSelector
 from sklearn.model_selection import train_test_split
 from sklearn import model_selection
 from sklearn.linear_model import LogisticRegression
+import warnings
+warnings.filterwarnings('ignore')
+
 
 def performanceEvaluation(model, X, y, cv_, n):
     df_temp=pd.DataFrame(columns=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1', 'nFeatures'])

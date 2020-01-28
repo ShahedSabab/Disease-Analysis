@@ -13,6 +13,8 @@ from mlxtend.feature_selection import SequentialFeatureSelector
 from sklearn.model_selection import train_test_split
 from sklearn import model_selection
 from sklearn.linear_model import LogisticRegression
+import warnings
+warnings.filterwarnings('ignore')
 
 def performanceEvaluation(model, X, y, cv_, n):
     df_temp=pd.DataFrame(columns=['Model', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1', 'nFeatures'])
@@ -68,8 +70,8 @@ sfs = sfs.fit(X,y)
 ff = list(sfs.k_feature_idx_)
 X_new = dataset[dataset.columns[ff]].values
 df_sf = df_sf.append(performanceEvaluation(model, X_new, y, cv, len(X_new[0][:])))
-
-
+#
+#
 #Random Forest
 model = RandomForestClassifier(n_estimators = 100, random_state=0)
 sfs = SequentialFeatureSelector(model,k_features=feature_n,forward=True,verbose=2,scoring='accuracy',cv=cv)

@@ -31,6 +31,8 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.feature_selection import RFECV
 from sklearn import preprocessing
 from pathlib import Path
+import warnings
+warnings.filterwarnings('ignore')
 
 
 def performanceEvaluation(model, X, y, cv_, n):
