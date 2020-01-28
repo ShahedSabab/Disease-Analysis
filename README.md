@@ -1,12 +1,12 @@
 # Disease-Analysis
 Analysis of detection of different diseases using differnt features selections techniques e.g., filter method and wrapper method.
 
-##Dataset:<br />
+# Dataset:<br />
 Parkinson.csv <br />
 Numeber of Samples: 195<br />
 Number of Features: 23 (voice measures)<br />
 
-##Applied Method:<br />
+# Applied Techniques:<br />
 Filter Method: 
 • chi2<br />
 • ANOVA F test<br />
@@ -17,7 +17,7 @@ Wrapper Method:
 • Sequential Feature Selector (sfs-forward & sfs-backward)<br />
 • Exhaustive Feature Selector<br />
 
-##Output:<br />
+# Output:<br />
 Check .csv files for detailed output<br />
 
 #Vislualization:<br />
