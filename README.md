@@ -20,6 +20,6 @@ Wrapper Method: <br />
 # Output:<br />
 Check .csv files for detailed output<br />
 
-#Vislualization:<br />
+# Vislualization:<br />
 Check modelAccuracy_filterMethod.png and modelAccuracy_wrapperMethod.png for performance analysis <br />
 
