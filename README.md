@@ -7,12 +7,12 @@ Numeber of Samples: 195<br />
 Number of Features: 23 (voice measures)<br />
 
 # Applied Techniques:<br />
-Filter Method: 
+Filter Method: <br />
 • chi2<br />
 • ANOVA F test<br />
 • Mutual Information (MI)<br />
 
-Wrapper Method: 
+Wrapper Method: <br />
 • Recursive Feature Elimination<br />
 • Sequential Feature Selector (sfs-forward & sfs-backward)<br />
 • Exhaustive Feature Selector<br />
