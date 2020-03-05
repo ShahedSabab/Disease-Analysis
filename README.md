@@ -7,6 +7,13 @@ Numeber of Samples: 195<br />
 Number of Features: 23 (voice measures)<br />
 
 # Applied Techniques:<br />
+Classifier:<br/>
+• Random Forest<br />
+• Logistic Regression <br />
+• SVC<br />
+• Naive Bayes <br />
+• KNN<br />
+
 Filter Method: <br />
 • chi2<br />
 • ANOVA F test<br />
