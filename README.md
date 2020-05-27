@@ -32,6 +32,3 @@ Check .csv files for detailed output<br />
 ![Model Accuracy using Filter Method](modelAccuracy_filterMethod.png)
 ![Model Accuracy using Wrapepr Method](modelAccuracy_wrapperMethod.png)
 
-
-1. asd
-1. asd
