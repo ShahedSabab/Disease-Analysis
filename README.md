@@ -1,4 +1,5 @@
 # Disease-Analysis
+The objective is to detect patient with Parkinsons Disease from the voice samples. The features of the voice samples includes 
 Analysis of detection of different diseases using differnt features selections techniques e.g., filter method and wrapper method.
 
 # Dataset:<br />
@@ -32,4 +33,5 @@ Check .csv files for detailed output<br />
 ![Model Accuracy using Wrapepr Method](modelAccuracy_wrapperMethod.png)
 
 
-
+1. asd
+1. asd
