@@ -32,3 +32,5 @@ Check .csv files for detailed output<br />
 ![Model Accuracy using Filter Method](modelAccuracy_filterMethod.png)
 ![Model Accuracy using Wrapepr Method](modelAccuracy_wrapperMethod.png)
 
+# Publication
+Publication Source: Check the publication for [Breast Cancer](https://ieeexplore.ieee.org/abstract/document/7860215), [Chronic Kidney Disease](https://ieeexplore.ieee.org/abstract/document/7835365), and [Cardiovascular Disease](https://ieeexplore.ieee.org/abstract/document/7835374) 
